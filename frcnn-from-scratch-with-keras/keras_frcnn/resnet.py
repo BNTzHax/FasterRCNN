@@ -10,17 +10,17 @@ from __future__ import absolute_import
 from keras.layers import Input, Add, Dense, Activation, Flatten, Convolution2D, MaxPooling2D, ZeroPadding2D, \
     AveragePooling2D, TimeDistributed, BatchNormalization, Dropout
 
-from keras import backend as K
+from tensorflow.keras import backend as K
 import os 
 from keras_frcnn.RoiPoolingConv import RoiPoolingConv
 from keras_frcnn.FixedBatchNormalization import FixedBatchNormalization
 
 
 def get_weight_path():
-    if K.image_dim_ordering() == 'th':
-        return 'resnet50_weights_th_dim_ordering_th_kernels_notop.h5'
-    else:
-        return os.path.join("pretrain", "resnet50_weights_tf_dim_ordering_tf_kernels.h5")
+    # if K.image_dim_ordering() == 'th':
+    #     return 'resnet50_weights_th_dim_ordering_th_kernels_notop.h5'
+    # else:
+      return os.path.join("pretrain", "resnet50_weights_tf_dim_ordering_tf_kernels.h5")
 
 def get_img_output_length(width, height):
     def get_output_length(input_length):
@@ -156,10 +156,10 @@ def conv_block_td(input_tensor, kernel_size, filters, stage, block, input_shape,
 def nn_base(input_tensor=None, trainable=False):
 
     # Determine proper input shape
-    if K.image_dim_ordering() == 'th':
-        input_shape = (3, None, None)
-    else:
-        input_shape = (None, None, 3)
+    # if K.image_dim_ordering() == 'th':
+    #     input_shape = (3, None, None)
+    # else:
+    input_shape = (None, None, 3)
 
     if input_tensor is None:
         img_input = Input(shape=input_shape)
@@ -168,11 +168,11 @@ def nn_base(input_tensor=None, trainable=False):
             img_input = Input(tensor=input_tensor, shape=input_shape)
         else:
             img_input = input_tensor
-
-    if K.image_dim_ordering() == 'tf':
-        bn_axis = 3
-    else:
-        bn_axis = 1
+    bn_axis = 3
+    # if K.image_dim_ordering() == 'tf':
+    #     bn_axis = 3
+    # else:
+    #     bn_axis = 1
 
     x = ZeroPadding2D((3, 3))(img_input)
 

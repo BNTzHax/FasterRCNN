@@ -10,11 +10,10 @@ import numpy as np
 from optparse import OptionParser
 import pickle
 import os
-
 from keras import backend as K
 from keras.optimizers import Adam, SGD, RMSprop
-from keras.layers import Input
-from keras.models import Model
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 from keras_frcnn import data_generators
 from keras_frcnn import config
 from keras_frcnn import losses as losses
@@ -168,8 +167,11 @@ data_gen_val = data_generators.get_anchor_gt(val_imgs, classes_count, C, nn.get_
 # set input shape
 input_shape_img = (None, None, 3)
 
-img_input = Input(shape=input_shape_img)
-roi_input = Input(shape=(None, 4))
+# img_input = Input(shape=input_shape_img)
+# roi_input = Input(shape=(None, 4))
+
+img_input = tf.keras.Input(shape=input_shape_img)
+roi_input = tf.keras.Input(shape=(None, 4))
 
 # create rpn model here
 # define the base network (resnet here, can be VGG, Inception, etc)
