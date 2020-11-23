@@ -36,16 +36,17 @@ def get_data(input_path, cat=None):
                 all_imgs[filename] = {}
 
                 img = cv2.imread(filename)
-                if img is not None:
-                    (rows, cols) = img.shape[:2]
-                    all_imgs[filename]['filepath'] = filename
-                    all_imgs[filename]['width'] = cols
-                    all_imgs[filename]['height'] = rows
-                    all_imgs[filename]['bboxes'] = []
-                    if np.random.randint(0, 6) > 0:
-                        all_imgs[filename]['imageset'] = 'trainval'
-                    else:
-                        all_imgs[filename]['imageset'] = 'test'
+                if img is None:
+                    continue
+                (rows, cols) = img.shape[:2]
+                all_imgs[filename]['filepath'] = filename
+                all_imgs[filename]['width'] = cols
+                all_imgs[filename]['height'] = rows
+                all_imgs[filename]['bboxes'] = []
+                if np.random.randint(0, 6) > 0:
+                    all_imgs[filename]['imageset'] = 'trainval'
+                else:
+                    all_imgs[filename]['imageset'] = 'test'
 
             all_imgs[filename]['bboxes'].append({'class': class_name, 'x1': int(x1), 'x2': int(x2), 'y1': int(y1), 'y2': int(y2)})
 
