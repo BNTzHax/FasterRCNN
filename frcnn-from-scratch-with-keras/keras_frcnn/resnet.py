@@ -7,7 +7,7 @@ Adapted from code contributed by BigMoyan.
 from __future__ import print_function
 from __future__ import absolute_import
 
-from keras.layers import Input, Add, Dense, Activation, Flatten, Convolution2D, MaxPooling2D, ZeroPadding2D, \
+from tensorflow.keras.layers import Input, Add, Dense, Activation, Flatten, Convolution2D, MaxPooling2D, ZeroPadding2D, \
     AveragePooling2D, TimeDistributed, BatchNormalization, Dropout
 
 from tensorflow.keras import backend as K
@@ -38,11 +38,11 @@ def get_img_output_length(width, height):
 def identity_block(input_tensor, kernel_size, filters, stage, block, trainable=True):
 
     nb_filter1, nb_filter2, nb_filter3 = filters
-    
-    if K.image_dim_ordering() == 'tf':
-        bn_axis = 3
-    else:
-        bn_axis = 1
+    bn_axis = 3
+    # if K.image_dim_ordering() == 'tf':
+    #     bn_axis = 3
+    # else:
+    #     bn_axis = 1
 
     conv_name_base = 'res' + str(stage) + block + '_branch'
     bn_name_base = 'bn' + str(stage) + block + '_branch'
@@ -95,10 +95,11 @@ def identity_block_td(input_tensor, kernel_size, filters, stage, block, trainabl
 def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2), trainable=True):
 
     nb_filter1, nb_filter2, nb_filter3 = filters
-    if K.image_dim_ordering() == 'tf':
-        bn_axis = 3
-    else:
-        bn_axis = 1
+    bn_axis = 3
+    # if K.image_dim_ordering() == 'tf':
+    #     bn_axis = 3
+    # else:
+    #     bn_axis = 1
 
     conv_name_base = 'res' + str(stage) + block + '_branch'
     bn_name_base = 'bn' + str(stage) + block + '_branch'
